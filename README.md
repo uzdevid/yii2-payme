@@ -1,31 +1,21 @@
 Payme
 =====
-Integration with payme payment services
+Payme Business to'lov tizimi bilan integratsiya qilish uchun yii2 frameworki uchun kengaytma.
 
-Installation
-------------
+Kengaytmani o'rnatish
+---------------------
 
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
-
-Either run
+Composer orqali o'rnating
 
 ```
-php composer.phar require --prefer-dist uzdevid/yii2-payme "dev-main"
+composer require uzdevid/yii2-payme "dev-main"
 ```
 
-or add
+Foydalanish
+===========
 
-```
-"uzdevid/yii2-payme": "dev-main"
-```
-
-to the require section of your `composer.json` file.
-
-Usage
-=====
-
-Create controller
------------------
+Controller yaratish
+-------------------
 
 ```php
 use app\models\Account;
@@ -37,7 +27,7 @@ use Yii;
 class PaymeController extends Merchant{
     public $login = 'Paycom';
     public $key = '<key>';
-    public $userFind; // User model
+    public $userFind; // User modeli
     public $user_pk = 'id';
     
     public function __construct($id, $module, $config = []) {
@@ -47,7 +37,7 @@ class PaymeController extends Merchant{
 }
 ```
 
-Method: [checkPerformTransaction](https://developer.help.paycom.uz/ru/metody-merchant-api/checkperformtransaction)
+Metod: [checkPerformTransaction](https://developer.help.paycom.uz/ru/metody-merchant-api/checkperformtransaction)
 
 ```php
 public function checkPerformTransaction($payload) {
@@ -136,7 +126,7 @@ public function performTransaction($payload) {
 }
  ```
 
-Method: [cancelTransaction](https://developer.help.paycom.uz/ru/metody-merchant-api/canceltransaction)
+Metod: [cancelTransaction](https://developer.help.paycom.uz/ru/metody-merchant-api/canceltransaction)
 
 ```php
 public function cancelTransaction($payload) {
@@ -187,7 +177,7 @@ public function cancelTransaction($payload) {
 }
  ```
 
-Method: [checkTransaction](https://developer.help.paycom.uz/ru/metody-merchant-api/checktransaction)
+Metod: [checkTransaction](https://developer.help.paycom.uz/ru/metody-merchant-api/checktransaction)
 
 ```php
 public function checkTransaction($payload) {
@@ -212,7 +202,7 @@ public function checkTransaction($payload) {
 }
  ```
 
-Method: [getStatement](https://developer.help.paycom.uz/ru/metody-merchant-api/getstatement)
+Metod: [getStatement](https://developer.help.paycom.uz/ru/metody-merchant-api/getstatement)
 
 ```php
 public function getStatement($payload) {
