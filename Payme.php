@@ -9,8 +9,8 @@ use yii\base\InvalidValueException;
 class Payme extends Component {
     public $merchant;
     public $mode = 'dev';
-    public $_dev_url = 'https://test.paycom.uz/';
-    public $_url = 'https://checkout.paycom.uz/';
+    public $_dev_url = 'https://test.paycom.uz';
+    public $_url = 'https://checkout.paycom.uz';
 
     public function __construct($config = []) {
         parent::__construct($config);
