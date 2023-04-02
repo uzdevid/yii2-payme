@@ -3,7 +3,7 @@
 namespace uzdevid\payme\merchant;
 
 use Yii;
-use Yii\web\Controller;
+use yii\web\Controller;
 use yii\web\Response;
 
 /**
