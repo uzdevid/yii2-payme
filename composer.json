@@ -1,22 +1,27 @@
 {
-    "name": "uzdevid/yii2-payme",
-    "description": "Integration with payme payment services",
-    "type": "yii2-extension",
-    "keywords": ["yii2","extension","payme"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Ibragimov Diyorbek",
-            "email": "uzdevid@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "yiisoft/yii2": "~2.0.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "uzdevid\\payme\\": ""
-        }
+  "name": "uzdevid/yii2-payme",
+  "description": "Payme to'lov tizimi bilan integratsiya qilish uchun Yii2 framework-i uchun kengaytma",
+  "type": "yii2-extension",
+  "keywords": [
+    "yii2",
+    "extension",
+    "payme",
+    "paycom",
+    "uzdevid"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ibragimov Diyorbek",
+      "email": "uzdevid@gmail.com"
     }
+  ],
+  "require": {
+    "yiisoft/yii2": "~2.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "uzdevid\\payme\\": ""
+    }
+  }
 }
