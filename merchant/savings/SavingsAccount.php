@@ -2,7 +2,6 @@
 
 namespace uzdevid\payme\merchant\savings;
 
-use app\models\uysavdo\PaymeTransaction;
 use uzdevid\payme\merchant\Merchant;
 use uzdevid\payme\merchant\MerchantOptions;
 
@@ -14,8 +13,14 @@ use uzdevid\payme\merchant\MerchantOptions;
  * @author UzDevid - Ibragimov Diyorbek
  * @license MIT
  *
- * @method userClass()
- * @method transactionClass()
+ * @method userClass(): string
+ * @method transactionClass(): string
+ * @method userBalance(int $userId): int
+ * @method checkAmount(int $amount): bool
+ * @method allowTransaction(array $payload): bool
+ * @method transactionCreated($transaction): void
+ * @method allowRefund($transaction): bool
+ * @method refund($transaction): void
  */
 class SavingsAccount extends Merchant {
     protected function checkAccount(array $payload): bool|array {
@@ -32,6 +37,10 @@ class SavingsAccount extends Merchant {
     private function checkPerformTransaction(): array {
         if ($this->checkAmount($this->payload['params']['amount'])) {
             return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Amount is not valid');
+        }
+
+        if ($this->allowTransaction($this->payload)) {
+            return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be performed');
         }
 
         return $this->success(['allow' => true]);
@@ -91,9 +100,9 @@ class SavingsAccount extends Merchant {
             $transaction->state = MerchantOptions::STATE_COMPLETED;
             $transaction->perform_time = time() * 1000;
             $transaction->save();
-        }
 
-        if ($transaction->state != MerchantOptions::STATE_COMPLETED) {
+            $this->transactionCreated($transaction);
+        } elseif ($transaction->state != MerchantOptions::STATE_COMPLETED) {
             return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be performed');
         }
 
@@ -110,6 +119,10 @@ class SavingsAccount extends Merchant {
 
         if (!$transaction) {
             return $this->error(MerchantOptions::ERROR_TRANSACTION_NOT_FOUND, 'Transaction not found');
+        }
+
+        if (!$this->allowRefund($transaction)) {
+            return $this->error(MerchantOptions::ERROR_COULD_NOT_CANCEL, 'Transaction could not be cancelled');
         }
 
         if ($transaction->state == MerchantOptions::STATE_CREATED) {
@@ -145,6 +158,8 @@ class SavingsAccount extends Merchant {
         $transaction->cancel_time = time() * 1000;
         $transaction->save();
 
+        $this->refund($transaction);
+
         return $this->success([
             'state' => $transaction->state,
             'cancel_time' => $transaction->cancel_time,
@@ -174,7 +189,7 @@ class SavingsAccount extends Merchant {
         $from = $this->payload['params']['from'];
         $to = $this->payload['params']['to'];
 
-        $transactions = array_map(function (PaymeTransaction $transaction) {
+        $transactions = array_map(function ($transaction) {
             return [
                 'id' => $transaction->transaction_id,
                 'time' => $transaction->create_time,

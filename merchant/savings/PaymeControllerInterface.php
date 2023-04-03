@@ -10,4 +10,12 @@ interface PaymeControllerInterface {
     function userBalance(int $userId): int;
 
     function checkAmount(int $amount): bool;
+
+    function allowTransaction(array $payload): bool;
+
+    function transactionCreated($transaction): void;
+
+    function allowRefund($transaction): bool;
+
+    function refund($transaction): void;
 }
