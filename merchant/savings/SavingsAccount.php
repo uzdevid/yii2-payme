@@ -69,6 +69,7 @@ class SavingsAccount extends Merchant {
             $transaction->state = MerchantOptions::STATE_CREATED;
 
             if (!$transaction->save()) {
+                Yii::error('Transaction could not be saved. Errors: ' . json_encode($transaction->errors), 'uzdevid/yii2-payme');
                 return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be saved');
             }
         }
@@ -93,13 +94,21 @@ class SavingsAccount extends Merchant {
                 $transaction->state = MerchantOptions::STATE_CANCELLED;
                 $transaction->reason = MerchantOptions::REASON_CANCELLED_BY_TIMEOUT;
                 $transaction->cancel_time = time() * 1000;
-                $transaction->save();
+
+                if (!$transaction->save()) {
+                    Yii::error('Transaction could not be saved. Errors: ' . json_encode($transaction->errors), 'uzdevid/yii2-payme');
+                }
+
                 return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction timeout');
             }
 
             $transaction->state = MerchantOptions::STATE_COMPLETED;
             $transaction->perform_time = time() * 1000;
-            $transaction->save();
+
+            if (!$transaction->save()) {
+                Yii::error('Transaction could not be saved. Errors: ' . json_encode($transaction->errors), 'uzdevid/yii2-payme');
+                return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be performed');
+            }
 
             $this->transactionCreated($transaction);
         } elseif ($transaction->state != MerchantOptions::STATE_COMPLETED) {
@@ -129,7 +138,11 @@ class SavingsAccount extends Merchant {
             $transaction->state = MerchantOptions::STATE_CANCELLED;
             $transaction->reason = $this->payload['params']['reason'];
             $transaction->cancel_time = time() * 1000;
-            $transaction->save();
+
+            if (!$transaction->save()) {
+                Yii::error('Transaction could not be saved. Errors: ' . json_encode($transaction->errors), 'uzdevid/yii2-payme');
+                return $this->error(MerchantOptions::ERROR_COULD_NOT_CANCEL, 'Transaction could not be cancelled');
+            }
 
             return $this->success([
                 'state' => $transaction->state,
@@ -156,7 +169,11 @@ class SavingsAccount extends Merchant {
         $transaction->state = MerchantOptions::STATE_CANCELLED_AFTER_COMPLETE;
         $transaction->reason = $this->payload['params']['reason'];
         $transaction->cancel_time = time() * 1000;
-        $transaction->save();
+
+        if (!$transaction->save()) {
+            Yii::error('Transaction could not be saved. Errors: ' . json_encode($transaction->errors), 'uzdevid/yii2-payme');
+            return $this->error(MerchantOptions::ERROR_COULD_NOT_CANCEL, 'Transaction could not be cancelled');
+        }
 
         $this->refund($transaction);
 
