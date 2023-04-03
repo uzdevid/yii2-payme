@@ -176,7 +176,7 @@ class SavingsAccount extends Merchant {
         }
 
         return $this->success([
-            'create_time' => $transaction->create_time * 1000,
+            'create_time' => $transaction->create_time,
             'perform_time' => (int)$transaction->perform_time,
             'cancel_time' => (int)$transaction->cancel_time,
             'transaction' => (string)$transaction->id,
