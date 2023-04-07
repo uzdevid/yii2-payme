@@ -29,10 +29,8 @@ class CheckoutUrl {
         ], $params);
 
         $params = http_build_query($params, '', ';');
+        $token = base64_encode(str_replace(["%5B", "%5D"], ['.', ''], $params));
 
-        $params_str = str_replace(["%5B", "%5D"], ['.', ''], $params);
-
-        $token = base64_encode($params);
         $url = YII_ENV_DEV ? self::TEST_ENDPOINT : self::PRODUCTION_ENDPOINT;
 
         return $url . $token;
