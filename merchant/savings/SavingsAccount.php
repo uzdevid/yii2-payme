@@ -94,7 +94,7 @@ class SavingsAccount extends Merchant {
         }
 
         if ($transaction->state == MerchantOptions::STATE_CREATED) {
-            if ((time() * 1000 - $this->payload['params']['time']) > MerchantOptions::TIMEOUT) {
+            if (((time() * 1000) - $transaction->create_time) > MerchantOptions::TIMEOUT) {
                 $transaction->state = MerchantOptions::STATE_CANCELLED;
                 $transaction->reason = MerchantOptions::REASON_CANCELLED_BY_TIMEOUT;
                 $transaction->cancel_time = time() * 1000;
