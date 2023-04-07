@@ -47,6 +47,10 @@ class SavingsAccount extends Merchant {
     }
 
     final protected function createTransaction(): array {
+        if (!$this->checkAmount($this->payload['params']['amount'])) {
+            return $this->error(MerchantOptions::ERROR_INVALID_AMOUNT, 'Amount is not valid');
+        }
+
         $transactionId = $this->payload['params']['id'];
         $transaction = $this->transactionClass()::find()->where(['transaction_id' => $transactionId])->one();
 
