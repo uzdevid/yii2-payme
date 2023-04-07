@@ -55,7 +55,7 @@ class SavingsAccount extends Merchant {
         $transaction = $this->transactionClass()::find()->where(['transaction_id' => $transactionId])->one();
 
         if ($transaction) {
-            if ($transaction->status != MerchantOptions::STATE_CREATED) {
+            if ($transaction->state != MerchantOptions::STATE_CREATED) {
                 return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction already performed');
             }
 
