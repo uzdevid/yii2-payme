@@ -37,7 +37,7 @@ class SiteController extends yii\web\Controller {
         $merchant_id = "{merchant id}";
         
         $account = [
-            '{identifikator nomi}' => "<identifikatori qiymati>",
+            '{identifikator nomi}' => "{identifikatori qiymati}",
         ];
         
         $amount = 100000;
