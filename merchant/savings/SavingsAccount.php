@@ -36,7 +36,7 @@ class SavingsAccount extends Merchant {
 
     final protected function checkPerformTransaction(): array {
         if (!$this->checkAmount($this->payload['params']['amount'])) {
-            return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Amount is not valid');
+            return $this->error(MerchantOptions::ERROR_INVALID_AMOUNT, 'Amount is not valid');
         }
 
         if (!$this->allowTransaction($this->payload)) {
