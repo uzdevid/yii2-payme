@@ -28,12 +28,22 @@ Yoki quyidagi qatorni `composer.json` faylga qo'shing:
 
 ## Merchant API protokoli
 
+**Jamg'arma hisobi** - Foydalanuvchi tizimda o'z balansini to'ldirish uchun ([foydalanish yo'riqnimasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant/savings))
+
 **Bir martalik hisob** - Buyurtma yoki xizmatlar uchun to'lov. (tez kunda)
 
-**Jamg'arma hisobi** - Foydalanuvchi tizimda o'z balansini to'ldirish uchun ([foydalanish yo'riqnimasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant/savings))
+**To'lov havolasini yaratish** - Foydalanuvchi to'lovni amalga oshirish uchun havola yaratish. ([foydalanish yo'riqnomasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant))
 
 ---
 
 ### Subscribe API protokoli
 
 - Tez kunda
+
+----
+
+**Integratsiya bo'yicha batafsil ma'lumotlarni https://developer.help.paycom.uz saytidan ko'rishingiz mumkin.**
+
+- Taklif va shikoyatlar uchun: https://devid.uz
+
+- Moddiy taraflama qo'llab quvvatlash uchun: https://payme.uz/@uzdevid

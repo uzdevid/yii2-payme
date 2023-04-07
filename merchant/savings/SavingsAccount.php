@@ -12,15 +12,6 @@ use uzdevid\payme\merchant\MerchantOptions;
  * @version 1.0.0
  * @author UzDevid - Ibragimov Diyorbek
  * @license MIT
- *
- * @method userClass(): string
- * @method transactionClass(): string
- * @method userBalance(int $userId): int
- * @method checkAmount(int $amount): bool
- * @method allowTransaction(array $payload): bool
- * @method transactionCreated($transaction): void
- * @method allowRefund($transaction): bool
- * @method refund($transaction): void
  */
 class SavingsAccount extends Merchant {
     protected function checkAccount(array $payload): bool|array {
