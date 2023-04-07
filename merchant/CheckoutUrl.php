@@ -11,6 +11,16 @@ namespace uzdevid\payme\merchant;
  * @license MIT
  */
 class CheckoutUrl {
+    public const TEST_ENDPOINT = 'https://test.paycom.uz/';
+    public const PRODUCTION_ENDPOINT = 'https://checkout.paycom.uz/';
+
+    /**
+     * @param string $merchant_id
+     * @param array $account
+     * @param int $amount
+     * @param array $params
+     * @return string
+     */
     public static function generate(string $merchant_id, array $account, int $amount, array $params = []): string {
         $params = array_merge([
             'm' => $merchant_id,
@@ -18,7 +28,13 @@ class CheckoutUrl {
             'a' => $amount
         ], $params);
 
-        $token = base64_encode(http_build_query($params, '', ';'));
-        return YII_ENV_DEV ? "https://test.paycom.uz/${token}" : "https://checkout.paycom.uz/${token}";
+        $params = http_build_query($params, '', ';');
+
+        $params_str = str_replace(["%5B", "%5D"], ['.', ''], $params);
+
+        $token = base64_encode($params);
+        $url = YII_ENV_DEV ? self::TEST_ENDPOINT : self::PRODUCTION_ENDPOINT;
+
+        return $url . $token;
     }
 }
