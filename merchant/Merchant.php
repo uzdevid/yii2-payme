@@ -35,10 +35,6 @@ class Merchant extends Controller {
             return $error;
         }
 
-        if (empty($payload['method'])) {
-            return $this->error(MerchantOptions::ERROR_INVALID_JSON_RPC_OBJECT, 'Invalid request');
-        }
-
         if ($error = $this->checkAccount($this->payload)) {
             return $error;
         }
