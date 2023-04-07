@@ -34,7 +34,7 @@ class SavingsAccount extends Merchant {
         return true;
     }
 
-    private function checkPerformTransaction(): array {
+    final protected function checkPerformTransaction(): array {
         if ($this->checkAmount($this->payload['params']['amount'])) {
             return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Amount is not valid');
         }
@@ -46,7 +46,7 @@ class SavingsAccount extends Merchant {
         return $this->success(['allow' => true]);
     }
 
-    private function createTransaction(): array {
+    final protected function createTransaction(): array {
         $transactionId = $this->payload['params']['id'];
         $transaction = $this->transactionClass()::find()->where(['transaction_id' => $transactionId])->one();
 
@@ -81,7 +81,7 @@ class SavingsAccount extends Merchant {
         ]);
     }
 
-    private function performTransaction(): array {
+    final protected function performTransaction(): array {
         $transactionId = $this->payload['params']['id'];
         $transaction = $this->transactionClass()::find()->where(['transaction_id' => $transactionId])->one();
 
@@ -122,7 +122,7 @@ class SavingsAccount extends Merchant {
         ]);
     }
 
-    private function cancelTransaction(): array {
+    final protected function cancelTransaction(): array {
         $transactionId = $this->payload['params']['id'];
         $transaction = $this->transactionClass()::find()->where(['transaction_id' => $transactionId])->one();
 
@@ -184,7 +184,7 @@ class SavingsAccount extends Merchant {
         ]);
     }
 
-    private function checkTransaction(): array {
+    final protected function checkTransaction(): array {
         $transactionId = $this->payload['params']['id'];
         $transaction = $this->transactionClass()::find()->where(['transaction_id' => $transactionId])->one();
 
@@ -202,7 +202,7 @@ class SavingsAccount extends Merchant {
         ]);
     }
 
-    private function getStatement(): array {
+    final protected function getStatement(): array {
         $from = $this->payload['params']['from'];
         $to = $this->payload['params']['to'];
 

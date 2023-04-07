@@ -35,7 +35,7 @@ class Merchant extends Controller {
             return $error;
         }
 
-        if ($error = $this->checkAccount($this->payload) !== true) {
+        if (($error = $this->checkAccount($this->payload)) !== true) {
             return $error;
         }
 
