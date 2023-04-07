@@ -23,10 +23,17 @@ use yii\web\Response;
  */
 class Merchant extends Controller {
     protected array $payload = [];
+    public string $login = 'Paycom';
+    public string|null $key = null;
 
     public function init(): void {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $this->payload = json_decode(Yii::$app->request->rawBody, true);
+
+        if (empty($this->key)) {
+            throw new Exception('Payme key is required');
+        }
+
         parent::init();
     }
 
@@ -74,7 +81,7 @@ class Merchant extends Controller {
         ];
     }
 
-    protected function error(int $code, string $message): array {
+    protected function error(int $code, string $message, $data = null): array {
         return [
             'id' => $this->payload['id'] ?? null,
             'jsonrpc' => '2.0',
@@ -82,7 +89,7 @@ class Merchant extends Controller {
             'error' => [
                 'code' => $code,
                 'message' => $message,
-                'data' => null,
+                'data' => $data,
             ],
         ];
     }

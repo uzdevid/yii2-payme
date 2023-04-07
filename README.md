@@ -28,9 +28,9 @@ Yoki quyidagi qatorni `composer.json` faylga qo'shing:
 
 ## Merchant API protokoli
 
-**Bir martalik hisob** ([foydalanish yo'riqnimasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant/disposable)) - Buyurtma yoki xizmatlar uchun to'lov
+**Bir martalik hisob** - Buyurtma yoki xizmatlar uchun to'lov. (tez kunda)
 
-**Jamg'arma hisobi** ([foydalanish yo'riqnimasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant/savings)) - Foydalanuvchi tizimda o'z balansini to'ldirish uchun
+**Jamg'arma hisobi** - Foydalanuvchi tizimda o'z balansini to'ldirish uchun ([foydalanish yo'riqnimasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant/savings))
 
 ---
 
