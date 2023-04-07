@@ -21,7 +21,7 @@ Foydalanuvchidan eng kamida kerak bo'ladigan ma'lumotlar.
 CREATE TABLE IF NOT EXISTS `user` (
   `id` INT UNIQUE NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL,
-  PRIMARY KEY (`id`);
+  PRIMARY KEY (`id`));
 ```
 
 ----
