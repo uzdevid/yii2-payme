@@ -49,7 +49,7 @@ class SiteController extends yii\web\Controller {
             'cr' => 'uzs'
         ];
 
-        $checkout_url = new CheckoutUrl($merchant_id, $account, $amount, $params);
+        $checkout_url = CheckoutUrl::generate($merchant_id, $account, $amount, $params);
         return $this->redirect($checkout_url);
     }
 }
