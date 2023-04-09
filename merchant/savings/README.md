@@ -92,6 +92,8 @@ CREATE TABLE IF NOT EXISTS `transaction` (
     ON UPDATE NO ACTION);
 ```
 
+----
+
 2. **Controller yaratish va unga `SavingsAccount` klassidan me'ros olish va `SavingsControllerInterface` interfeysini qo'shish.**
 
 - `{payme kaliti}` - Payme tomonidan beriladigan kalit.
@@ -110,10 +112,12 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
 }
 ```
 
+----
+
 3. `SavingsControllerInterface` interfeysi talab qilgan methodlarni yozish
 
 - `userClass()` - Foydalanuvchi modeli klassini qaytarishi lozim. Misol uchun `app\models\User:class`
-- `transactionClass()` - Foydalanuvchi jamg'arma hisobi transaksiyasi modeli klassi qaytarishi lozim.
+- `transactionClass()` - payme_transaction jadvalining model klassini qaytarishi lozim. Misol uchun `app\models\PaymeTransaction:class`
 - `checkAmount()` - Foydalanuvchi to'lov qilmoqchi bo'lgan summasini tekshirish (tiyinda).
 - `allowTransaction()` - Foydalanuvchi to'lov qilishga ruxsat berish. Agar ruxsat berilmagan bo'lsa `false` qaytaradi aks holda `true`.
 - `transactionPerformed()` - Foydalanuvchi to'lov qilgandan so'ng ishga tushadigan method. Bu methodda foydalanuvchi jamg'arma hisobiga to'lov summasini 'kirim' turi bilan saqlash lozim.
@@ -169,11 +173,16 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
 }
 ```
 
+----
+
 4. To'liq misol:
 
 ```php
 namespace app\controllers;
 
+use app\models\PaymeTransaction;
+use app\models\Transaction;
+use app\models\User;
 use uzdevid\payme\merchant\savings\SavingsAccount;
 use uzdevid\payme\merchant\savings\SavingsControllerInterface;
 
@@ -207,7 +216,7 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
         $model->source = Transaction::SOURCE_PAYME;
         $model->source_id = $transaction->id;
         $model->user_id = $transaction->user_id;
-        $model->amount = $transaction->amount / 100;
+        $model->amount = $transaction->amount;
         $model->type = Transaction::TYPE_TOP_UP;
         $model->save();
     }
@@ -228,7 +237,7 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
 
         $model = new Transaction();
         $model->user_id = $transaction->user_id;
-        $model->amount = $transaction->amount / 100;
+        $model->amount = $transaction->amount;
         $model->type = Transaction::TYPE_REFUND;
         $model->save();
     }

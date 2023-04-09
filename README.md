@@ -30,7 +30,7 @@ Yoki quyidagi qatorni `composer.json` faylga qo'shing:
 
 **Jamg'arma hisobi** - Foydalanuvchi tizimda o'z balansini to'ldirish uchun ([foydalanish yo'riqnimasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant/savings))
 
-**Bir martalik hisob** - Buyurtma yoki xizmatlar uchun to'lov. (tez kunda)
+**Bir martalik hisob** - Buyurtma yoki xizmatlar uchun to'lov. ([foydalanish yo'riqnimasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant/disposable))
 
 **To'lov havolasini yaratish** - Foydalanuvchi to'lovni amalga oshirish uchun havola yaratish. ([foydalanish yo'riqnomasi](https://github.com/uzdevid/yii2-payme/tree/main/merchant))
 

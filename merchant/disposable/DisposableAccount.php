@@ -14,14 +14,6 @@ use Yii;
  * @version 1.0.0
  * @author UzDevid - Ibragimov Diyorbek
  * @license MIT
- *
- * @method orderClass()
- * @method transactionClass()
- * @method allowPay($order)
- * @method transactionCreated($order, $transaction)
- * @method transactionPerformed($order, $transaction)
- * @method allowRefund($order, $transaction)
- * @method refund($order, $transaction)
  */
 class DisposableAccount extends Merchant {
     private $_order;
