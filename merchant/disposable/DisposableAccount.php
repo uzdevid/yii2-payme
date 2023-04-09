@@ -51,10 +51,6 @@ class DisposableAccount extends Merchant {
     }
 
     final protected function createTransaction(): array {
-        if (!$this->allowPay($this->_order)) {
-            return $this->error(MerchantOptions::ERROR_INVALID_ACCOUNT, 'The order is not available for payment');
-        }
-
         if ($this->_order->amount != $this->payload['params']['amount']) {
             return $this->error(MerchantOptions::ERROR_INVALID_AMOUNT, 'Amount is not valid');
         }
@@ -73,6 +69,10 @@ class DisposableAccount extends Merchant {
                 return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction timeout');
             }
         } else {
+            if (!$this->allowPay($this->_order)) {
+                return $this->error(MerchantOptions::ERROR_INVALID_ACCOUNT, 'The order is not available for payment');
+            }
+
             $transaction = new ($this->transactionClass())();
             $transaction->transaction_id = $transactionId;
             $transaction->order_id = $this->payload['params']['account']['order_id'];
