@@ -116,7 +116,7 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
 - `transactionClass()` - Foydalanuvchi jamg'arma hisobi transaksiyasi modeli klassi qaytarishi lozim.
 - `checkAmount()` - Foydalanuvchi to'lov qilmoqchi bo'lgan summasini tekshirish (tiyinda).
 - `allowTransaction()` - Foydalanuvchi to'lov qilishga ruxsat berish. Agar ruxsat berilmagan bo'lsa `false` qaytaradi aks holda `true`.
-- `transactionCreated()` - Foydalanuvchi to'lov qilgandan so'ng ishga tushadigan method. Bu methodda foydalanuvchi jamg'arma hisobiga to'lov summasini 'kirim' turi bilan saqlash lozim.
+- `transactionPerformed()` - Foydalanuvchi to'lov qilgandan so'ng ishga tushadigan method. Bu methodda foydalanuvchi jamg'arma hisobiga to'lov summasini 'kirim' turi bilan saqlash lozim.
 - `allowRefund()` - Foydalanuvchi to'lovni qaytarishga ruxsat berish. Agar ruxsat berilmagan bo'lsa `false` qaytaradi aks holda `true`.
 - `userBalance()` - Foydalanuvchi balansini (tiyinda) qaytarishi lozim. To'lov ortga qaytarilish jarayonida ushbu balans bilan qaytariladigan summa tekshiriladi. Agar balans yetarli bo'lsa foydalanuvchiga to'lov qaytariladi.
 - `refund()` - Foydalanuvchiga to'lov qaytarilganidan so'ng ishga tushadigan method. Bu methodda foydalanuvchi jamg'arma hisobidan qaytarilgan summani 'qaytarildi' turi bilan saqlash lozim.
@@ -155,7 +155,7 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
         // TODO: Implement allowTransaction() method.
     }
 
-    public function transactionCreated($transaction): void {
+    public function transactionPerformed($transaction): void {
         // TODO: Implement transactionCreated() method.
     }
 
@@ -200,7 +200,7 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
         return true;
     }
 
-    function transactionCreated($transaction): void {
+    function transactionPerformed($transaction): void {
          /** @var PaymeTransaction $transaction */
 
         $model = new Transaction();

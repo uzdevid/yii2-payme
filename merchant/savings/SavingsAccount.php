@@ -105,7 +105,7 @@ class SavingsAccount extends Merchant {
                 return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be performed');
             }
 
-            $this->transactionCreated($transaction);
+            $this->transactionPerformed($transaction);
         } elseif ($transaction->state != MerchantOptions::STATE_COMPLETED) {
             return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be performed');
         }

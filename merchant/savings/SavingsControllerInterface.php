@@ -11,7 +11,7 @@ interface SavingsControllerInterface {
 
     function allowTransaction(array $payload): bool;
 
-    function transactionCreated($transaction): void;
+    function transactionPerformed($transaction): void;
 
     function allowRefund($transaction): bool;
 
