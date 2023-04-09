@@ -51,6 +51,10 @@ class DisposableAccount extends Merchant {
     }
 
     final protected function createTransaction(): array {
+        if (!$this->allowPay($this->_order)) {
+            return $this->error(MerchantOptions::ERROR_INVALID_ACCOUNT, 'The order is not available for payment');
+        }
+
         if ($this->_order->amount != $this->payload['params']['amount']) {
             return $this->error(MerchantOptions::ERROR_INVALID_AMOUNT, 'Amount is not valid');
         }
