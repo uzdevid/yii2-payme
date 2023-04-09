@@ -71,7 +71,7 @@ class DisposableAccount extends Merchant {
         } else {
             $transaction = new ($this->transactionClass())();
             $transaction->transaction_id = $transactionId;
-            $transaction->user_id = $this->payload['params']['account']['user_id'];
+            $transaction->order_id = $this->payload['params']['account']['order_id'];
             $transaction->amount = $this->payload['params']['amount'];
             $transaction->create_time = time() * 1000;
             $transaction->state = MerchantOptions::STATE_CREATED;
@@ -121,7 +121,9 @@ class DisposableAccount extends Merchant {
                 return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be performed');
             }
 
-            $this->transactionPerformed($this->_order, $transaction);
+            $order = $this->orderClass()::find()->where(['id' => $transaction->order_id])->one();
+
+            $this->transactionPerformed($order, $transaction);
         } elseif ($transaction->state != MerchantOptions::STATE_COMPLETED) {
             return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be performed');
         }
