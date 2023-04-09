@@ -5,6 +5,7 @@ namespace uzdevid\payme\merchant\disposable;
 use app\models\uysavdo\PaymeTransaction;
 use uzdevid\payme\merchant\Merchant;
 use uzdevid\payme\merchant\MerchantOptions;
+use Yii;
 
 /**
  * Class DisposableAccount
