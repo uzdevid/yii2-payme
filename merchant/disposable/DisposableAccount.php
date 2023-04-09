@@ -139,11 +139,13 @@ class DisposableAccount extends Merchant {
         $transactionId = $this->payload['params']['id'];
         $transaction = $this->transactionClass()::find()->where(['transaction_id' => $transactionId])->one();
 
+        $order = $this->orderClass()::find()->where(['id' => $transaction->order_id])->one();
+
         if (!$transaction) {
             return $this->error(MerchantOptions::ERROR_TRANSACTION_NOT_FOUND, 'Transaction not found');
         }
 
-        if (!$this->allowRefund($this->_order, $transaction)) {
+        if (!$this->allowRefund($order, $transaction)) {
             return $this->error(MerchantOptions::ERROR_COULD_NOT_CANCEL, 'Transaction could not be cancelled');
         }
 
@@ -181,7 +183,7 @@ class DisposableAccount extends Merchant {
             return $this->error(MerchantOptions::ERROR_COULD_NOT_CANCEL, 'Transaction could not be cancelled');
         }
 
-        $this->refund($this->_order, $transaction);
+        $this->refund($order, $transaction);
 
         return $this->success([
             'state' => $transaction->state,
