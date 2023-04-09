@@ -76,7 +76,7 @@ class DisposableAccount extends Merchant {
             $transaction->create_time = time() * 1000;
             $transaction->state = MerchantOptions::STATE_CREATED;
 
-            if ($transaction->save()) {
+            if (!$transaction->save()) {
                 Yii::error('Transaction could not be saved. Errors: ' . json_encode($transaction->errors), 'uzdevid/yii2-payme');
                 return $this->error(MerchantOptions::ERROR_COULD_NOT_PERFORM, 'Transaction could not be saved');
             }
