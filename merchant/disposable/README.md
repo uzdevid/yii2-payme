@@ -94,6 +94,39 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 
 ----
 
+Foydalanuvchilarning buyurtmalari saqlanadigan jadval. 
+Ushbu jadval kengaytma bilan to'g'ridan to'g'ri bog'lik emas, 
+balki u callback methodlar orqali ishlatilinadi, shu bois to'liq ixtiyoriy. 
+Faqatgina kerakli amallarni bajara olsangiz bas.
+
+- `id` | `[ixtiyoriy]` - Tranzaksiya ID.
+- `user_id` | `[ixtiyoriy]` - Foydalanuvchi ID.
+- `source` | `[ixtiyoriy]` - Tranzaksiya manbai (Payme, Click, Uzumbank va h.k.z).
+- `source_id` | `[ixtiyoriy]` - Tranzaksiya manbai ID.
+- `amount` | `[ixtiyoriy]` - Buyurtma summasi.
+- `status` | `[ixtiyoriy]` - Buyurtma to'lov holati.
+- `create_time` | `[ixtiyoriy]` - Buyurtma yaratilgan vaqti.
+
+```sql
+CREATE TABLE IF NOT EXISTS `order` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `source` VARCHAR(24) NOT NULL,
+  `source_id` INT(11) NOT NULL,
+  `amount` INT NOT NULL,
+  `status` VARCHAR(24) NOT NULL,
+  `create_time` BIGINT(16) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_order_user_id_idx` (`user_id` ASC),
+  CONSTRAINT `fk_order_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `uysavdo`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+```
+
+----
+
 2. **Controller yaratish va unga `DisposableAccount` klassidan me'ros olish va `DisposableControllerInterface` interfeysini qo'shish.**
 
 - `{payme kaliti}` - Payme tomonidan beriladigan kalit.
