@@ -180,11 +180,7 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
 ```php
 namespace app\controllers;
 
-use app\models\PaymeTransaction;
-use app\models\Transaction;
-use app\models\User;
-use uzdevid\payme\merchant\savings\SavingsAccount;
-use uzdevid\payme\merchant\savings\SavingsControllerInterface;
+use app\models\PaymeTransaction;use app\models\Transaction;use app\models\User;use uzdevid\payme\merchant\savings\SavingsAccount;use uzdevid\payme\merchant\savings\SavingsControllerInterface;
 
 class PaymeController extends SavingsAccount implements SavingsControllerInterface {
 
@@ -213,11 +209,12 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
          /** @var PaymeTransaction $transaction */
 
         $model = new Transaction();
-        $model->source = Transaction::SOURCE_PAYME;
+        $model->source = Transaction::SOURCE_PAYME; // payme
         $model->source_id = $transaction->id;
         $model->user_id = $transaction->user_id;
         $model->amount = $transaction->amount;
-        $model->type = Transaction::TYPE_TOP_UP;
+        $model->type = Transaction::TYPE_TOP_UP; // top-up
+        $model->create_time = time() * 1000;
         $model->save();
     }
 
@@ -238,7 +235,7 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
         $model = new Transaction();
         $model->user_id = $transaction->user_id;
         $model->amount = $transaction->amount;
-        $model->type = Transaction::TYPE_REFUND;
+        $model->type = Transaction::TYPE_REFUND; // refund
         $model->save();
     }
 }

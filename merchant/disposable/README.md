@@ -224,7 +224,7 @@ class PaymeDisposableController extends DisposableAccount implements DisposableC
     }
 
     function allowPay($order): bool {
-        return $order->status === Order::STATUS_NEW;
+        return $order->status === Order::STATUS_NEW; // new
     }
 
     function transactionCreated($order, $transaction): void {
@@ -238,23 +238,25 @@ class PaymeDisposableController extends DisposableAccount implements DisposableC
          * @var PaymeTransaction $transaction
          */
 
-        $order->status = Order::STATUS_PAID;
+        $order->status = Order::STATUS_PAID; // paid
         $order->save();
 
         $model = new Transaction();
-        $model->source = Transaction::SOURCE_PAYME;
+        $model->source = Transaction::SOURCE_PAYME; // payme
         $model->source_id = $transaction->id;
         $model->user_id = $order->user_id;
         $model->amount = $transaction->amount;
-        $model->type = Transaction::TYPE_TOP_UP;
+        $model->type = Transaction::TYPE_TOP_UP; // top-up
+        $model->create_time = time() * 1000;
         $model->save();
 
         $model = new Transaction();
-        $model->source = Transaction::SOURCE_ORDER;
+        $model->source = Transaction::SOURCE_ORDER; // order
         $model->source_id = $order->id;
         $model->user_id = $order->user_id;
         $model->amount = $transaction->amount;
-        $model->type = Transaction::TYPE_EXPENSE;
+        $model->type = Transaction::TYPE_EXPENSE; // expense
+        $model->create_time = time() * 1000;
         $model->save();
     }
 
