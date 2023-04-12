@@ -209,11 +209,11 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
          /** @var PaymeTransaction $transaction */
 
         $model = new Transaction();
-        $model->source = Transaction::SOURCE_PAYME; // payme
+        $model->source = TransactionService::SOURCE_PAYME; // payme
         $model->source_id = $transaction->id;
         $model->user_id = $transaction->user_id;
         $model->amount = $transaction->amount;
-        $model->type = Transaction::TYPE_TOP_UP; // top-up
+        $model->type = TransactionService::TYPE_TOP_UP; // top-up
         $model->create_time = time() * 1000;
         $model->save();
     }
@@ -235,7 +235,8 @@ class PaymeController extends SavingsAccount implements SavingsControllerInterfa
         $model = new Transaction();
         $model->user_id = $transaction->user_id;
         $model->amount = $transaction->amount;
-        $model->type = Transaction::TYPE_REFUND; // refund
+        $model->type = TransactionService::TYPE_REFUND; // refund
+        $model->create_time = time() * 1000;
         $model->save();
     }
 }
@@ -253,10 +254,14 @@ namespace app\models\service;
 use app\models\Transaction;
 
 class TransactionService {
+    public const SOURCE_PAYME = 'payme';
+
     public const TYPE_TOP_UP = 'top-up';
     public const TYPE_BONUS = 'bonus';
     public const TYPE_EXPENSE = 'expense';
-
+    public const TYPE_REFUND = 'refund';
+    
+    
     public const INCREMENT = [
         self::TYPE_TOP_UP,
         self::TYPE_BONUS,
@@ -264,6 +269,7 @@ class TransactionService {
 
     public const DECREMENT = [
         self::TYPE_EXPENSE,
+        self::TYPE_REFUND,
     ];
 
     public static function userBalance(int $user_id): int {

@@ -224,11 +224,11 @@ class PaymeDisposableController extends DisposableAccount implements DisposableC
     }
 
     function allowPay($order): bool {
-        return $order->status === Order::STATUS_NEW; // new
+        return $order->status === TransactionService::ORDER_NEW;
     }
 
     function transactionCreated($order, $transaction): void {
-        $order->status = Order::STATUS_PENDING;
+        $order->status = TransactionService::ORDER_PENDING;
         $order->save();
     }
 
@@ -238,26 +238,26 @@ class PaymeDisposableController extends DisposableAccount implements DisposableC
          * @var PaymeTransaction $transaction
          */
 
-        $order->status = Order::STATUS_PAID; // paid
-        $order->save();
-
         $model = new Transaction();
-        $model->source = Transaction::SOURCE_PAYME; // payme
+        $model->source = TransactionService::SOURCE_PAYME;
         $model->source_id = $transaction->id;
         $model->user_id = $order->user_id;
         $model->amount = $transaction->amount;
-        $model->type = Transaction::TYPE_TOP_UP; // top-up
+        $model->type = TransactionService::TYPE_TOP_UP;
         $model->create_time = time() * 1000;
         $model->save();
 
         $model = new Transaction();
-        $model->source = Transaction::SOURCE_ORDER; // order
+        $model->source = TransactionService::SOURCE_ORDER;
         $model->source_id = $order->id;
         $model->user_id = $order->user_id;
         $model->amount = $transaction->amount;
-        $model->type = Transaction::TYPE_EXPENSE; // expense
+        $model->type = TransactionService::TYPE_EXPENSE;
         $model->create_time = time() * 1000;
         $model->save();
+        
+        $order->status = TransactionService::ORDER_PAID;
+        $order->save();
     }
 
     function allowRefund($order, $transaction): bool {
@@ -268,6 +268,31 @@ class PaymeDisposableController extends DisposableAccount implements DisposableC
 
     }
 
+}
+```
+
+5. **O'zgarmaslar yozilgan klass**
+
+```php
+<?php
+
+namespace app\models\service;
+
+use app\models\Transaction;
+
+class TransactionService {
+    public const SOURCE_PAYME = 'payme';
+
+    public const TYPE_TOP_UP = 'top-up';
+    public const TYPE_BONUS = 'bonus';
+    public const TYPE_EXPENSE = 'expense';
+    public const TYPE_REFUND = 'refund';
+    
+    public const SOURCE_ORDER = 'order';
+    
+    public const ORDER_NEW = 'new';
+    public const ORDER_PENDING = 'pending';
+    public const ORDER_PAID = 'paid';
 }
 ```
 
