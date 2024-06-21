@@ -30,6 +30,13 @@ class DisposableAccount extends Merchant {
         return true;
     }
 
+    /**
+     * @return array
+     */
+    protected function details(): array {
+        return [];
+    }
+
     final protected function checkPerformTransaction(): array {
         if (!$this->allowPay($this->_order)) {
             return $this->error(MerchantOptions::ERROR_INVALID_ACCOUNT, 'The order is not available for payment');
@@ -39,7 +46,7 @@ class DisposableAccount extends Merchant {
             return $this->error(MerchantOptions::ERROR_INVALID_AMOUNT, 'Amount is not valid');
         }
 
-        return $this->success(['allow' => true]);
+        return $this->success(['allow' => true, 'details' => $this->details()]);
     }
 
     final protected function createTransaction(): array {
