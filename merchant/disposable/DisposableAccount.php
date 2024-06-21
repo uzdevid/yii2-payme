@@ -46,7 +46,7 @@ class DisposableAccount extends Merchant {
             return $this->error(MerchantOptions::ERROR_INVALID_AMOUNT, 'Amount is not valid');
         }
 
-        return $this->success(['allow' => true, 'details' => $this->details()]);
+        return $this->success(['allow' => true, 'detail' => $this->details()]);
     }
 
     final protected function createTransaction(): array {
